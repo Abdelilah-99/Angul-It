@@ -13,13 +13,14 @@ import { Router } from '@angular/router';
 export class CaptchaComponent implements OnInit {
   captchaNumber: number = -1;
   selectedChoice: number = -1;
+  count: number = 0;
   msg: String | null;
   tasks = [
     { name: 'Run away', completed: false, id: 0 },
     { name: 'Share honey with it', completed: false, id: 1 },
     { name: 'Bear mace!', completed: false, id: 2 }
   ];
-  
+
   // Tic-tac-toe grid for level 1
   grid = [
     ['', 'O', 'X'],
@@ -52,6 +53,8 @@ export class CaptchaComponent implements OnInit {
         localStorage.setItem('level', '2');
         this.captchaNumber = 2;
         console.log("it's level two");
+      } else if (level == 'done') {
+        this.router.navigate(['result']);
       }
     }
   }
@@ -84,5 +87,19 @@ export class CaptchaComponent implements OnInit {
     } else {
       this.msg = "Please select a cell first.";
     }
+  }
+
+  spam() {
+    this.count++;
+  }
+
+  onValidate() {
+    if (this.count === 5) {
+      localStorage.setItem('level', 'done');
+      this.router.navigate(['/result']);
+      return;
+    }
+    this.count = 0;
+    this.msg = "wrong";
   }
 }

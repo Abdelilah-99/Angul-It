@@ -40,5 +40,8 @@
     }
 </div>
 } @else if (captchaNumber == 2) {
-
+    <p>Click 5 times</p>
+    <button (click)="spam()">plusplus {{this.count}}</button>
+    <br>
+    <button (click)="onValidate()">Validate</button>
 }
