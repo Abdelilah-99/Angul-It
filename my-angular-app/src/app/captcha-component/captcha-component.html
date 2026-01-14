@@ -1,1 +1,44 @@
-<p>captcha-component works!</p>
+@if (captchaNumber === 0) {
+<form>
+    <p>What do you do if you encounter a bear?</p>
+    <ul>
+        @for(task of tasks; track task.id) {
+        <li>
+            <input type="radio" name="bear-answer" [value]="task.id" [(ngModel)]="selectedChoice">
+            {{ task.name }}
+        </li>
+        }
+    </ul>
+    <button (click)="onSubmit()" type="submit">Validate</button>
+    @if(msg) {
+    {{this.msg}}
+    }
+</form>
+} @else if (captchaNumber == 1) {
+<div class="tic-tac-toe-challenge">
+    <h3>Select the winning move for X</h3>
+    <p>Where should X play to win the game?</p>
+    <div class="grid">
+        @for(row of grid; track $index; let i = $index) {
+        <div class="grid-row">
+            @for(cell of row; track $index; let j = $index) {
+            <button 
+                class="grid-cell"
+                [class.selected]="selectedCell?.row === i && selectedCell?.col === j"
+                [class.empty]="cell === ''"
+                [disabled]="cell !== ''"
+                (click)="selectCell(i, j)">
+                {{ cell }}
+            </button>
+            }
+        </div>
+        }
+    </div>
+    <button class="submit-btn" (click)="submitTicTacToe()">Submit Move</button>
+    @if(msg) {
+    <p class="message">{{msg}}</p>
+    }
+</div>
+} @else if (captchaNumber == 2) {
+
+}
