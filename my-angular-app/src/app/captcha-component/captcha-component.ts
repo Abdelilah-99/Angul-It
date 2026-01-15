@@ -2,6 +2,8 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastComponent } from '../toast/component/toastComponent';
+import { ToastService } from '../toast/service/toast';
 
 @Component({
   selector: 'app-captcha-component',
@@ -15,8 +17,8 @@ export class CaptchaComponent implements OnInit {
   selectedChoice: number = -1;
   count: number = 0;
   msg: String | null;
-  
-  // Statistics tracking
+
+  toastMessage: { text: string, type: 'success' | 'error' | 'warning' } | null = null;
   stats = {
     level0Failures: 0,
     level0Attempts: 0,
@@ -27,7 +29,7 @@ export class CaptchaComponent implements OnInit {
     totalAttempts: 0,
     totalFailures: 0
   };
-  
+
   tasks = [
     { name: 'Run away', completed: false, id: 0 },
     { name: 'Share honey with it', completed: false, id: 1 },
@@ -40,7 +42,7 @@ export class CaptchaComponent implements OnInit {
     ['X', 'O', 'O']
   ];
   selectedCell: { row: number, col: number } | null = null;
-  constructor(private router: Router, @Inject(PLATFORM_ID) private platformId: Object) {
+  constructor(private router: Router, @Inject(PLATFORM_ID) private platformId: Object, private toasService: ToastService) {
     if (isPlatformBrowser(PLATFORM_ID)) {
       this.loadStats();
       const level = localStorage.getItem('level');
@@ -92,13 +94,15 @@ export class CaptchaComponent implements OnInit {
     console.log("=============== " + this.selectedChoice);
     this.stats.level0Attempts++;
     this.stats.totalAttempts++;
-    
+
     if (this.selectedChoice === 0) {
       this.msg = "Congrats! Moving to next challenge."
+      this.toasService.show(this.msg, 'success');
       localStorage.setItem('level', '1');
       this.captchaNumber = 1;
     } else {
       this.msg = "Wrong answer. Try again!";
+      this.toasService.show(this.msg, 'error');
       this.stats.level0Failures++;
       this.stats.totalFailures++;
     }
@@ -116,17 +120,20 @@ export class CaptchaComponent implements OnInit {
   submitTicTacToe() {
     this.stats.level1Attempts++;
     this.stats.totalAttempts++;
-    
+
     if (this.selectedCell && this.selectedCell.row === 1 && this.selectedCell.col === 1) {
       this.msg = "Correct! You found the winning move!";
+      this.toasService.show(this.msg, 'success');
       localStorage.setItem('level', '2');
       this.captchaNumber = 2;
     } else if (this.selectedCell) {
       this.msg = "Wrong move. Try again!";
+      this.toasService.show(this.msg, 'error');
       this.stats.level1Failures++;
       this.stats.totalFailures++;
     } else {
       this.msg = "Please select a cell first.";
+      this.toasService.show(this.msg, 'warning');
     }
     this.saveStats();
   }
@@ -138,17 +145,17 @@ export class CaptchaComponent implements OnInit {
   onValidate() {
     this.stats.level2Attempts++;
     this.stats.totalAttempts++;
-    
+
     if (this.count === 5) {
       this.msg = "Success! You clicked exactly 5 times!";
-      setTimeout(() => {
-        localStorage.setItem('level', 'done');
-        this.router.navigate(['/result']);
-      }, 1500);
+      this.toasService.show(this.msg, 'success');
+      localStorage.setItem('level', 'done');
+      this.router.navigate(['/result']);
       this.saveStats();
       return;
     }
     this.msg = `Wrong! You clicked ${this.count} time(s). Try again!`;
+    this.toasService.show(this.msg, 'error');
     this.stats.level2Failures++;
     this.stats.totalFailures++;
     this.count = 0;

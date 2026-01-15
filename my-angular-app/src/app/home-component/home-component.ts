@@ -9,16 +9,7 @@ import { Router } from '@angular/router';
   styleUrl: './home-component.css',
 })
 export class HomeComponent {
-  constructor(private router: Router, @Inject(PLATFORM_ID) platformId: Object) {
-    if (isPlatformBrowser(platformId)) {
-      const level = localStorage.getItem('level');
-      if (level == 'done') {
-        this.router.navigate(['/result'])
-      } else if (level != null) {
-        this.router.navigate(['/captcha'])
-      }
-    }
-  }
+  constructor(private router: Router, @Inject(PLATFORM_ID) platformId: Object) { }
 
   StartCaptcha(): void {
     this.router.navigate(['/captcha'])

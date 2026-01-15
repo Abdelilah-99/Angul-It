@@ -28,11 +28,6 @@
                         <button (click)="onSubmit()" type="submit" class="btn btn-primary btn-lg w-100">
                             <i class="bi bi-check-circle"></i> Validate Answer
                         </button>
-                        @if(msg) {
-                        <div class="alert mt-3 mb-0" [class.alert-success]="msg.includes('Congrats')" [class.alert-danger]="!msg.includes('Congrats')" role="alert">
-                            {{this.msg}}
-                        </div>
-                        }
                         <div class="alert alert-info mt-3 mb-0" role="alert">
                             <small><i class="bi bi-info-circle"></i> Level 1 - Attempts: {{stats.level0Attempts}} | Failures: {{stats.level0Failures}}</small>
                         </div>
@@ -70,11 +65,6 @@
                     <button class="btn btn-success btn-lg w-100" (click)="submitTicTacToe()">
                         <i class="bi bi-send"></i> Submit Move
                     </button>
-                    @if(msg) {
-                    <div class="alert mt-3 mb-0" [class.alert-success]="msg.includes('Correct')" [class.alert-danger]="!msg.includes('Correct')" role="alert">
-                        {{msg}}
-                    </div>
-                    }
                     <div class="alert alert-info mt-3 mb-0" role="alert">
                         <small><i class="bi bi-info-circle"></i> Level 2 - Attempts: {{stats.level1Attempts}} | Failures: {{stats.level1Failures}}</small>
                     </div>
@@ -99,11 +89,6 @@
                     <button (click)="onValidate()" class="btn btn-warning btn-lg w-100">
                         <i class="bi bi-check-circle"></i> Validate
                     </button>
-                    @if(msg) {
-                    <div class="alert mt-3 mb-0" [class.alert-success]="msg.includes('Success') || msg.includes('exactly')" [class.alert-danger]="!msg.includes('Success') && !msg.includes('exactly')" role="alert">
-                        {{msg}}
-                    </div>
-                    }
                     <div class="alert alert-info mt-3 mb-0" role="alert">
                         <small><i class="bi bi-info-circle"></i> Level 3 - Attempts: {{stats.level2Attempts}} | Failures: {{stats.level2Failures}}</small>
                     </div>
