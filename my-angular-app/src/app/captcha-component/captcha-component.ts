@@ -30,6 +30,18 @@ export class CaptchaComponent implements OnInit {
     totalFailures: 0
   };
 
+  captchaStatsImg = [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+  ]
+
   tasks = [
     { name: 'Run away', completed: false, id: 0 },
     { name: 'Share honey with it', completed: false, id: 1 },
@@ -109,6 +121,11 @@ export class CaptchaComponent implements OnInit {
     this.saveStats();
   }
 
+  captchaImgNum(n: number) {
+    this.captchaStatsImg[n] = !this.captchaStatsImg[n];
+    console.log(this.captchaStatsImg[n]);
+  }
+
   selectCell(row: number, col: number) {
     if (this.grid[row][col] === '') {
       this.selectedCell = { row, col };
@@ -138,23 +155,28 @@ export class CaptchaComponent implements OnInit {
     this.saveStats();
   }
 
-  spam() {
-    this.count++;
-  }
-
   onValidate() {
     this.stats.level2Attempts++;
     this.stats.totalAttempts++;
-
-    if (this.count === 5) {
-      this.msg = "Success! You clicked exactly 5 times!";
+    let c = 0;
+    for (let index = 0; index < this.captchaStatsImg.length; index++) {
+      if (!this.captchaStatsImg[index]) {
+        c++;
+      }
+    }
+    if (c === 4 && this.captchaStatsImg[0]
+      && this.captchaStatsImg[1]
+      && this.captchaStatsImg[2]
+      && this.captchaStatsImg[3]
+      && this.captchaStatsImg[4]) {
+      this.msg = "Success!!";
       this.toasService.show(this.msg, 'success');
       localStorage.setItem('level', 'done');
       this.router.navigate(['/result']);
       this.saveStats();
       return;
     }
-    this.msg = `Wrong! You clicked ${this.count} time(s). Try again!`;
+    this.msg = `Wrong! . Try again!`;
     this.toasService.show(this.msg, 'error');
     this.stats.level2Failures++;
     this.stats.totalFailures++;

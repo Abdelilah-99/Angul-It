@@ -1,7 +1,7 @@
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-8 col-lg-6">
-            
+
             @if (captchaNumber === 0) {
             <div class="card shadow-lg">
                 <div class="card-header bg-primary text-white">
@@ -14,12 +14,8 @@
                             <div class="list-group">
                                 @for(task of tasks; track task.id) {
                                 <label class="list-group-item list-group-item-action d-flex align-items-center">
-                                    <input 
-                                        class="form-check-input me-3" 
-                                        type="radio" 
-                                        name="bear-answer" 
-                                        [value]="task.id" 
-                                        [(ngModel)]="selectedChoice">
+                                    <input class="form-check-input me-3" type="radio" name="bear-answer"
+                                        [value]="task.id" [(ngModel)]="selectedChoice">
                                     <span class="fs-6">{{ task.name }}</span>
                                 </label>
                                 }
@@ -29,12 +25,13 @@
                             <i class="bi bi-check-circle"></i> Validate Answer
                         </button>
                         <div class="alert alert-info mt-3 mb-0" role="alert">
-                            <small><i class="bi bi-info-circle"></i> Level 1 - Attempts: {{stats.level0Attempts}} | Failures: {{stats.level0Failures}}</small>
+                            <small><i class="bi bi-info-circle"></i> Level 1 - Attempts: {{stats.level0Attempts}} |
+                                Failures: {{stats.level0Failures}}</small>
                         </div>
                     </form>
                 </div>
             </div>
-            
+
             } @else if (captchaNumber == 1) {
             <div class="card shadow-lg">
                 <div class="card-header bg-success text-white">
@@ -48,12 +45,10 @@
                             @for(row of grid; track $index; let i = $index) {
                             <div class="grid-row">
                                 @for(cell of row; track $index; let j = $index) {
-                                <button 
-                                    class="grid-cell btn"
+                                <button class="grid-cell btn"
                                     [class.btn-success]="selectedCell?.row === i && selectedCell?.col === j"
                                     [class.btn-outline-warning]="cell === '' && !(selectedCell?.row === i && selectedCell?.col === j)"
-                                    [class.btn-outline-secondary]="cell !== ''"
-                                    [disabled]="cell !== ''"
+                                    [class.btn-outline-secondary]="cell !== ''" [disabled]="cell !== ''"
                                     (click)="selectCell(i, j)">
                                     <span class="fs-3">{{ cell || '?' }}</span>
                                 </button>
@@ -66,36 +61,79 @@
                         <i class="bi bi-send"></i> Submit Move
                     </button>
                     <div class="alert alert-info mt-3 mb-0" role="alert">
-                        <small><i class="bi bi-info-circle"></i> Level 2 - Attempts: {{stats.level1Attempts}} | Failures: {{stats.level1Failures}}</small>
+                        <small><i class="bi bi-info-circle"></i> Level 2 - Attempts: {{stats.level1Attempts}} |
+                            Failures: {{stats.level1Failures}}</small>
                     </div>
                 </div>
             </div>
-            
+
             } @else if (captchaNumber == 2) {
             <div class="card shadow-lg">
                 <div class="card-header bg-warning text-dark">
-                    <h4 class="mb-0"><i class="bi bi-mouse"></i> Security Challenge - Level 3</h4>
+                    <h4 class="mb-0"><i class="bi bi-image"></i> Image Challenge - Level 3</h4>
                 </div>
                 <div class="card-body p-4 text-center">
-                    <h5 class="text-dark mb-3">Click exactly 5 times</h5>
-                    <p class="text-muted mb-4">Test your precision - no more, no less!</p>
-                    <div class="mb-4">
-                        <div class="display-1 fw-bold text-primary mb-3">{{this.count}}</div>
-                        <p class="text-muted">Current clicks</p>
+                    <h5 class="text-dark mb-2">Select the cat images</h5>
+                    <p class="text-muted mb-4">Click on all images that contain cats.</p>
+                    <div class="row row-cols-3 g-3 captcha-grid">
+                        <button type="button" (click)="captchaImgNum(1)" [class.selected]="captchaStatsImg[1]" class="col d-flex">
+                            <img class="img-fluid rounded shadow-sm captcha-img"
+                                src="/recipe_Cute_cats_illustrated_in_Studio_Ghibli_style_soft_past_08608f5c-0960-4265-a2da-254a614ae18c_2.png"
+                                alt="Image 2">
+                        </button>
+                        <button type="button" (click)="captchaImgNum(3)" [class.selected]="captchaStatsImg[3]" class="col d-flex">
+                            <img class="img-fluid rounded shadow-sm captcha-img"
+                                src="/recipe_Cute_cats_illustrated_in_Studio_Ghibli_style_soft_past_54197285-fbd2-4552-9a96-3fd931f496aa_3.png"
+                                alt="Image 4">
+                        </button>
+                        <button type="button" (click)="captchaImgNum(4)" [class.selected]="captchaStatsImg[4]" class="col d-flex">
+                            <img class="img-fluid rounded shadow-sm captcha-img"
+                                src="/recipe_Cute_cats_illustrated_in_Studio_Ghibli_style_soft_past_67696592-4949-45ce-8e59-91d245713d43_3.png"
+                                alt="Image 5">
+                        </button>
+                        <button type="button" (click)="captchaImgNum(5)" [class.selected]="captchaStatsImg[5]" class="col d-flex">
+                            <img class="img-fluid rounded shadow-sm captcha-img"
+                                src="/recipe_realistic_photo_showing_many_random_everyday_objects_a_afa5af8c-0855-44a8-901e-d7c3a47085c0_0.png"
+                                alt="Image 6">
+                        </button>
+                        <button type="button" (click)="captchaImgNum(6)" [class.selected]="captchaStatsImg[6]" class="col d-flex">
+                            <img class="img-fluid rounded shadow-sm captcha-img"
+                                src="/recipe_realistic_photo_showing_many_random_everyday_objects_a_afa5af8c-0855-44a8-901e-d7c3a47085c0_1.png"
+                                alt="Image 7">
+                        </button>
+                        <button type="button" (click)="captchaImgNum(2)" [class.selected]="captchaStatsImg[2]" class="col d-flex">
+                            <img class="img-fluid rounded shadow-sm captcha-img"
+                                src="/recipe_Cute_cats_illustrated_in_Studio_Ghibli_style_soft_past_54197285-fbd2-4552-9a96-3fd931f496aa_2.png"
+                                alt="Image 3">
+                        </button>
+                        <button type="button" (click)="captchaImgNum(7)" [class.selected]="captchaStatsImg[7]" class="col d-flex">
+                            <img class="img-fluid rounded shadow-sm captcha-img"
+                                src="/recipe_realistic_photo_showing_many_random_everyday_objects_a_afa5af8c-0855-44a8-901e-d7c3a47085c0_2.png"
+                                alt="Image 8">
+                        </button>
+                        <button type="button" (click)="captchaImgNum(0)" [class.selected]="captchaStatsImg[0]" class="col d-flex">
+                            <img class="img-fluid rounded shadow-sm captcha-img"
+                                src="/recipe_Cute_cats_illustrated_in_Studio_Ghibli_style_soft_past_54197285-fbd2-4552-9a96-3fd931f496aa_1.png"
+                                alt="Image 1">
+                        </button>
+                        <button type="button" (click)="captchaImgNum(8)" [class.selected]="captchaStatsImg[8]" class="col d-flex">
+                            <img class="img-fluid rounded shadow-sm captcha-img"
+                                src="/recipe_realistic_photo_showing_many_random_everyday_objects_a_afa5af8c-0855-44a8-901e-d7c3a47085c0_3.png"
+                                alt="Image 9">
+                        </button>
+
                     </div>
-                    <button (click)="spam()" class="btn btn-outline-primary btn-lg mb-3 w-100">
-                        <i class="bi bi-plus-circle"></i> Click Me
-                    </button>
-                    <button (click)="onValidate()" class="btn btn-warning btn-lg w-100">
+                    <button (click)="onValidate()" class="btn btn-warning btn-lg w-100 mt-5">
                         <i class="bi bi-check-circle"></i> Validate
                     </button>
                     <div class="alert alert-info mt-3 mb-0" role="alert">
-                        <small><i class="bi bi-info-circle"></i> Level 3 - Attempts: {{stats.level2Attempts}} | Failures: {{stats.level2Failures}}</small>
+                        <small><i class="bi bi-info-circle"></i> Level 3 - Attempts: {{stats.level2Attempts}} |
+                            Failures: {{stats.level2Failures}}</small>
                     </div>
                 </div>
             </div>
             }
-            
+
         </div>
     </div>
 </div>
