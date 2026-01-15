@@ -2,7 +2,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8 col-lg-6">
 
-            @if (captchaNumber === 0) {
+            @if (captchaNumber === 0 || (captchaPage === 0 && captchaNumber > 0)) {
             <div class="card shadow-lg">
                 <div class="card-header bg-primary text-white">
                     <h4 class="mb-0"><i class="bi bi-shield-check"></i> Security Challenge - Level 1</h4>
@@ -30,9 +30,25 @@
                         </div>
                     </form>
                 </div>
+                <div class="card-footer bg-transparent border-0 p-3">
+                    <div class="row g-2">
+                        <div class="col">
+                            <button class="btn btn-outline-secondary w-100" (click)="goHome()">
+                                <i class="bi bi-house-door"></i> Home
+                            </button>
+                        </div>
+                        @if (captchaNumber > 0) {
+                        <div class="col">
+                            <button class="btn btn-primary w-100" (click)="goNext()">
+                                Next <i class="bi bi-arrow-right"></i>
+                            </button>
+                        </div>
+                        }
+                    </div>
+                </div>
             </div>
 
-            } @else if (captchaNumber == 1) {
+            } @else if (captchaNumber == 1 || (captchaNumber >= 1 && captchaPage === 1)) {
             <div class="card shadow-lg">
                 <div class="card-header bg-success text-white">
                     <h4 class="mb-0"><i class="bi bi-grid-3x3"></i> Security Challenge - Level 2</h4>
@@ -65,6 +81,24 @@
                             Failures: {{stats.level1Failures}}</small>
                     </div>
                 </div>
+                <div class="card-footer bg-transparent border-0 p-3">
+                    <div class="row g-2">
+                        @if (captchaPage >= 1) {
+                        <div class="col">
+                            <button class="btn btn-outline-secondary w-100" (click)="goBack()">
+                                <i class="bi bi-arrow-left"></i> Back
+                            </button>
+                        </div>
+                        }
+                        @if (captchaNumber > 1) {
+                        <div class="col">
+                            <button class="btn btn-success w-100" (click)="goNext()">
+                                Next <i class="bi bi-arrow-right"></i>
+                            </button>
+                        </div>
+                        }
+                    </div>
+                </div>
             </div>
 
             } @else if (captchaNumber == 2) {
@@ -76,47 +110,56 @@
                     <h5 class="text-dark mb-2">Select the cat images</h5>
                     <p class="text-muted mb-4">Click on all images that contain cats.</p>
                     <div class="row row-cols-3 g-3 captcha-grid">
-                        <button type="button" (click)="captchaImgNum(1)" [class.selected]="captchaStatsImg[1]" class="col d-flex">
+                        <button type="button" (click)="captchaImgNum(1)" [class.selected]="captchaStatsImg[1]"
+                            class="col d-flex">
                             <img class="img-fluid rounded shadow-sm captcha-img"
                                 src="/recipe_Cute_cats_illustrated_in_Studio_Ghibli_style_soft_past_08608f5c-0960-4265-a2da-254a614ae18c_2.png"
                                 alt="Image 2">
                         </button>
-                        <button type="button" (click)="captchaImgNum(3)" [class.selected]="captchaStatsImg[3]" class="col d-flex">
+                        <button type="button" (click)="captchaImgNum(3)" [class.selected]="captchaStatsImg[3]"
+                            class="col d-flex">
                             <img class="img-fluid rounded shadow-sm captcha-img"
                                 src="/recipe_Cute_cats_illustrated_in_Studio_Ghibli_style_soft_past_54197285-fbd2-4552-9a96-3fd931f496aa_3.png"
                                 alt="Image 4">
                         </button>
-                        <button type="button" (click)="captchaImgNum(4)" [class.selected]="captchaStatsImg[4]" class="col d-flex">
+                        <button type="button" (click)="captchaImgNum(4)" [class.selected]="captchaStatsImg[4]"
+                            class="col d-flex">
                             <img class="img-fluid rounded shadow-sm captcha-img"
                                 src="/recipe_Cute_cats_illustrated_in_Studio_Ghibli_style_soft_past_67696592-4949-45ce-8e59-91d245713d43_3.png"
                                 alt="Image 5">
                         </button>
-                        <button type="button" (click)="captchaImgNum(5)" [class.selected]="captchaStatsImg[5]" class="col d-flex">
+                        <button type="button" (click)="captchaImgNum(5)" [class.selected]="captchaStatsImg[5]"
+                            class="col d-flex">
                             <img class="img-fluid rounded shadow-sm captcha-img"
                                 src="/recipe_realistic_photo_showing_many_random_everyday_objects_a_afa5af8c-0855-44a8-901e-d7c3a47085c0_0.png"
                                 alt="Image 6">
                         </button>
-                        <button type="button" (click)="captchaImgNum(6)" [class.selected]="captchaStatsImg[6]" class="col d-flex">
+                        <button type="button" (click)="captchaImgNum(6)" [class.selected]="captchaStatsImg[6]"
+                            class="col d-flex">
                             <img class="img-fluid rounded shadow-sm captcha-img"
                                 src="/recipe_realistic_photo_showing_many_random_everyday_objects_a_afa5af8c-0855-44a8-901e-d7c3a47085c0_1.png"
                                 alt="Image 7">
                         </button>
-                        <button type="button" (click)="captchaImgNum(2)" [class.selected]="captchaStatsImg[2]" class="col d-flex">
+                        <button type="button" (click)="captchaImgNum(2)" [class.selected]="captchaStatsImg[2]"
+                            class="col d-flex">
                             <img class="img-fluid rounded shadow-sm captcha-img"
                                 src="/recipe_Cute_cats_illustrated_in_Studio_Ghibli_style_soft_past_54197285-fbd2-4552-9a96-3fd931f496aa_2.png"
                                 alt="Image 3">
                         </button>
-                        <button type="button" (click)="captchaImgNum(7)" [class.selected]="captchaStatsImg[7]" class="col d-flex">
+                        <button type="button" (click)="captchaImgNum(7)" [class.selected]="captchaStatsImg[7]"
+                            class="col d-flex">
                             <img class="img-fluid rounded shadow-sm captcha-img"
                                 src="/recipe_realistic_photo_showing_many_random_everyday_objects_a_afa5af8c-0855-44a8-901e-d7c3a47085c0_2.png"
                                 alt="Image 8">
                         </button>
-                        <button type="button" (click)="captchaImgNum(0)" [class.selected]="captchaStatsImg[0]" class="col d-flex">
+                        <button type="button" (click)="captchaImgNum(0)" [class.selected]="captchaStatsImg[0]"
+                            class="col d-flex">
                             <img class="img-fluid rounded shadow-sm captcha-img"
                                 src="/recipe_Cute_cats_illustrated_in_Studio_Ghibli_style_soft_past_54197285-fbd2-4552-9a96-3fd931f496aa_1.png"
                                 alt="Image 1">
                         </button>
-                        <button type="button" (click)="captchaImgNum(8)" [class.selected]="captchaStatsImg[8]" class="col d-flex">
+                        <button type="button" (click)="captchaImgNum(8)" [class.selected]="captchaStatsImg[8]"
+                            class="col d-flex">
                             <img class="img-fluid rounded shadow-sm captcha-img"
                                 src="/recipe_realistic_photo_showing_many_random_everyday_objects_a_afa5af8c-0855-44a8-901e-d7c3a47085c0_3.png"
                                 alt="Image 9">
@@ -131,6 +174,13 @@
                             Failures: {{stats.level2Failures}}</small>
                     </div>
                 </div>
+                @if (captchaPage >= 1) {
+                <div class="card-footer bg-transparent border-0 p-3">
+                    <button class="btn btn-outline-secondary w-100" (click)="goBack()">
+                        <i class="bi bi-arrow-left"></i> Back
+                    </button>
+                </div>
+                }
             </div>
             }
 

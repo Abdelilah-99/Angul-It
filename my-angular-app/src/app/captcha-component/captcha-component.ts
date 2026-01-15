@@ -17,6 +17,7 @@ export class CaptchaComponent implements OnInit {
   selectedChoice: number = -1;
   count: number = 0;
   msg: String | null;
+  captchaPage = 0;
 
   toastMessage: { text: string, type: 'success' | 'error' | 'warning' } | null = null;
   stats = {
@@ -90,16 +91,36 @@ export class CaptchaComponent implements OnInit {
         localStorage.setItem('level', '1');
         localStorage.setItem('captchaZero', '0')
         console.log("it's level one");
+        this.captchaPage = 1;
         this.captchaNumber = 1;
       } else if (level == '2') {
         localStorage.setItem('level', '2');
         localStorage.setItem('captchaZero', '0')
         this.captchaNumber = 2;
+        this.captchaPage = 2;
         console.log("it's level two");
       } else if (level == 'done') {
         this.router.navigate(['result']);
       }
     }
+  }
+
+  goHome() {
+    this.router.navigate(['/home']);
+  }
+
+  goNext() {
+    if (this.captchaPage === 2) {
+      return;
+    }
+    this.captchaPage++;
+  }
+
+  goBack() {
+    if (this.captchaPage === 0) {
+      return;
+    }
+    this.captchaPage--;
   }
 
   onSubmit() {
