@@ -1,47 +1,116 @@
-@if (captchaNumber === 0) {
-<form>
-    <p>What do you do if you encounter a bear?</p>
-    <ul>
-        @for(task of tasks; track task.id) {
-        <li>
-            <input type="radio" name="bear-answer" [value]="task.id" [(ngModel)]="selectedChoice">
-            {{ task.name }}
-        </li>
-        }
-    </ul>
-    <button (click)="onSubmit()" type="submit">Validate</button>
-    @if(msg) {
-    {{this.msg}}
-    }
-</form>
-} @else if (captchaNumber == 1) {
-<div class="tic-tac-toe-challenge">
-    <h3>Select the winning move for X</h3>
-    <p>Where should X play to win the game?</p>
-    <div class="grid">
-        @for(row of grid; track $index; let i = $index) {
-        <div class="grid-row">
-            @for(cell of row; track $index; let j = $index) {
-            <button 
-                class="grid-cell"
-                [class.selected]="selectedCell?.row === i && selectedCell?.col === j"
-                [class.empty]="cell === ''"
-                [disabled]="cell !== ''"
-                (click)="selectCell(i, j)">
-                {{ cell }}
-            </button>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            
+            @if (captchaNumber === 0) {
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0"><i class="bi bi-shield-check"></i> Security Challenge - Level 1</h4>
+                </div>
+                <div class="card-body p-4">
+                    <form>
+                        <div class="mb-4">
+                            <h5 class="text-dark mb-3">🐻 What do you do if you encounter a bear?</h5>
+                            <div class="list-group">
+                                @for(task of tasks; track task.id) {
+                                <label class="list-group-item list-group-item-action d-flex align-items-center">
+                                    <input 
+                                        class="form-check-input me-3" 
+                                        type="radio" 
+                                        name="bear-answer" 
+                                        [value]="task.id" 
+                                        [(ngModel)]="selectedChoice">
+                                    <span class="fs-6">{{ task.name }}</span>
+                                </label>
+                                }
+                            </div>
+                        </div>
+                        <button (click)="onSubmit()" type="submit" class="btn btn-primary btn-lg w-100">
+                            <i class="bi bi-check-circle"></i> Validate Answer
+                        </button>
+                        @if(msg) {
+                        <div class="alert mt-3 mb-0" [class.alert-success]="msg.includes('Congrats')" [class.alert-danger]="!msg.includes('Congrats')" role="alert">
+                            {{this.msg}}
+                        </div>
+                        }
+                        <div class="alert alert-info mt-3 mb-0" role="alert">
+                            <small><i class="bi bi-info-circle"></i> Level 1 - Attempts: {{stats.level0Attempts}} | Failures: {{stats.level0Failures}}</small>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            } @else if (captchaNumber == 1) {
+            <div class="card shadow-lg">
+                <div class="card-header bg-success text-white">
+                    <h4 class="mb-0"><i class="bi bi-grid-3x3"></i> Security Challenge - Level 2</h4>
+                </div>
+                <div class="card-body p-4 text-center">
+                    <h5 class="text-dark mb-2">Select the winning move for X</h5>
+                    <p class="text-muted mb-4">Where should X play to win the game?</p>
+                    <div class="d-flex justify-content-center mb-4">
+                        <div class="grid">
+                            @for(row of grid; track $index; let i = $index) {
+                            <div class="grid-row">
+                                @for(cell of row; track $index; let j = $index) {
+                                <button 
+                                    class="grid-cell btn"
+                                    [class.btn-success]="selectedCell?.row === i && selectedCell?.col === j"
+                                    [class.btn-outline-warning]="cell === '' && !(selectedCell?.row === i && selectedCell?.col === j)"
+                                    [class.btn-outline-secondary]="cell !== ''"
+                                    [disabled]="cell !== ''"
+                                    (click)="selectCell(i, j)">
+                                    <span class="fs-3">{{ cell || '?' }}</span>
+                                </button>
+                                }
+                            </div>
+                            }
+                        </div>
+                    </div>
+                    <button class="btn btn-success btn-lg w-100" (click)="submitTicTacToe()">
+                        <i class="bi bi-send"></i> Submit Move
+                    </button>
+                    @if(msg) {
+                    <div class="alert mt-3 mb-0" [class.alert-success]="msg.includes('Correct')" [class.alert-danger]="!msg.includes('Correct')" role="alert">
+                        {{msg}}
+                    </div>
+                    }
+                    <div class="alert alert-info mt-3 mb-0" role="alert">
+                        <small><i class="bi bi-info-circle"></i> Level 2 - Attempts: {{stats.level1Attempts}} | Failures: {{stats.level1Failures}}</small>
+                    </div>
+                </div>
+            </div>
+            
+            } @else if (captchaNumber == 2) {
+            <div class="card shadow-lg">
+                <div class="card-header bg-warning text-dark">
+                    <h4 class="mb-0"><i class="bi bi-mouse"></i> Security Challenge - Level 3</h4>
+                </div>
+                <div class="card-body p-4 text-center">
+                    <h5 class="text-dark mb-3">Click exactly 5 times</h5>
+                    <p class="text-muted mb-4">Test your precision - no more, no less!</p>
+                    <div class="mb-4">
+                        <div class="display-1 fw-bold text-primary mb-3">{{this.count}}</div>
+                        <p class="text-muted">Current clicks</p>
+                    </div>
+                    <button (click)="spam()" class="btn btn-outline-primary btn-lg mb-3 w-100">
+                        <i class="bi bi-plus-circle"></i> Click Me
+                    </button>
+                    <button (click)="onValidate()" class="btn btn-warning btn-lg w-100">
+                        <i class="bi bi-check-circle"></i> Validate
+                    </button>
+                    @if(msg) {
+                    <div class="alert mt-3 mb-0" [class.alert-success]="msg.includes('Success') || msg.includes('exactly')" [class.alert-danger]="!msg.includes('Success') && !msg.includes('exactly')" role="alert">
+                        {{msg}}
+                    </div>
+                    }
+                    <div class="alert alert-info mt-3 mb-0" role="alert">
+                        <small><i class="bi bi-info-circle"></i> Level 3 - Attempts: {{stats.level2Attempts}} | Failures: {{stats.level2Failures}}</small>
+                    </div>
+                </div>
+            </div>
             }
+            
         </div>
-        }
     </div>
-    <button class="submit-btn" (click)="submitTicTacToe()">Submit Move</button>
-    @if(msg) {
-    <p class="message">{{msg}}</p>
-    }
 </div>
-} @else if (captchaNumber == 2) {
-    <p>Click 5 times</p>
-    <button (click)="spam()">plusplus {{this.count}}</button>
-    <br>
-    <button (click)="onValidate()">Validate</button>
-}

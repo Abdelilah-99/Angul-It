@@ -1,6 +1,82 @@
-<div>
-    <h1>CAPTCHA 01</h1>
-    <p>This Project intended to implement a captcha systame of three levels<br>u can't pass to the next until u solve
-        them one by one <br> Good luck</p>
-    <button (click)="StartCaptcha()">Start</button>
+<div class="min-vh-100 d-flex align-items-center bg-light">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-xl-7">
+                
+                <!-- Hero Card -->
+                <div class="card shadow-lg border-0 mb-4">
+                    <div class="card-body p-5 text-center">
+                        <div class="mb-4">
+                            <div class="display-1 mb-3">🤖</div>
+                            <h1 class="display-4 fw-bold text-primary mb-3">CAPTCHA Challenge</h1>
+                            <p class="lead text-muted">Prove you're human, not a robot!</p>
+                        </div>
+                        
+                        <hr class="my-4">
+                        
+                        <!-- Description Section -->
+                        <div class="text-start mb-4">
+                            <h4 class="text-dark mb-3"><i class="bi bi-info-circle-fill text-primary"></i> About This Challenge</h4>
+                            <p class="text-muted mb-3">
+                                This interactive CAPTCHA system consists of <strong>three progressive levels</strong> designed to verify that you're a real person. 
+                                Each challenge tests different aspects of human cognition that are difficult for bots to replicate.
+                            </p>
+                            
+                            <div class="row g-3 mb-3">
+                                <div class="col-md-4">
+                                    <div class="card bg-primary bg-opacity-10 border-0 h-100">
+                                        <div class="card-body text-center">
+                                            <div class="fs-2 mb-2">🐻</div>
+                                            <h6 class="text-primary mb-1">Level 1</h6>
+                                            <small class="text-muted">Logic Challenge</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card bg-success bg-opacity-10 border-0 h-100">
+                                        <div class="card-body text-center">
+                                            <div class="fs-2 mb-2">❌⭕</div>
+                                            <h6 class="text-success mb-1">Level 2</h6>
+                                            <small class="text-muted">Strategy Test</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card bg-warning bg-opacity-10 border-0 h-100">
+                                        <div class="card-body text-center">
+                                            <div class="fs-2 mb-2">🖱️</div>
+                                            <h6 class="text-warning mb-1">Level 3</h6>
+                                            <small class="text-muted">Precision Task</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="alert alert-info border-0 mb-0">
+                                <i class="bi bi-lightbulb-fill"></i> <strong>Note:</strong> You must complete each level sequentially. 
+                                Progress is automatically saved, so you can return anytime!
+                            </div>
+                        </div>
+                        
+                        <!-- Start Button -->
+                        <button (click)="StartCaptcha()" class="btn btn-primary btn-lg px-5 py-3 shadow-sm">
+                            <i class="bi bi-play-circle-fill me-2"></i>
+                            Start Challenge
+                        </button>
+                        
+                        <p class="text-muted mt-3 mb-0 small">
+                            <i class="bi bi-shield-check"></i> Secure • Privacy-focused • No tracking
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Footer Info -->
+                <div class="text-center text-muted small">
+                    <p class="mb-1">Built with Angular 20 & Bootstrap 5</p>
+                    <p class="mb-0">© 2026 CAPTCHA Challenge System</p>
+                </div>
+                
+            </div>
+        </div>
+    </div>
 </div>

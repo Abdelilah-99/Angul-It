@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Component, Inject, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,7 +9,16 @@ import { Router } from '@angular/router';
   styleUrl: './home-component.css',
 })
 export class HomeComponent {
-  constructor(private router: Router) { }
+  constructor(private router: Router, @Inject(PLATFORM_ID) platformId: Object) {
+    if (isPlatformBrowser(platformId)) {
+      const level = localStorage.getItem('level');
+      if (level == 'done') {
+        this.router.navigate(['/result'])
+      } else if (level != null) {
+        this.router.navigate(['/captcha'])
+      }
+    }
+  }
 
   StartCaptcha(): void {
     this.router.navigate(['/captcha'])

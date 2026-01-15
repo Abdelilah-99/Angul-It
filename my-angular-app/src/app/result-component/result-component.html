@@ -1,1 +1,189 @@
-<p>result-component works!</p>
+<div class="min-vh-100 d-flex align-items-center bg-light">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-xl-7">
+                
+                <div class="card shadow-lg border-0 mb-4">
+                    <div class="card-body p-5 text-center">
+                        <div class="mb-4">
+                            <div class="display-1 mb-3">🎉</div>
+                            <h1 class="display-4 fw-bold text-success mb-3">Congratulations!</h1>
+                            <p class="lead text-muted">You've successfully completed all CAPTCHA challenges</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card shadow-lg border-0 mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0"><i class="bi bi-bar-chart-fill"></i> Overall Statistics</h4>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <div class="stat-box bg-primary bg-opacity-10 p-4 rounded">
+                                    <div class="small text-muted">Total Attempts</div>
+                                    <div class="h2 text-primary fw-bold">{{stats.totalAttempts}}</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="stat-box bg-danger bg-opacity-10 p-4 rounded">
+                                    <div class="small text-muted">Total Failures</div>
+                                    <div class="h2 text-danger fw-bold">{{stats.totalFailures}}</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="stat-box bg-success bg-opacity-10 p-4 rounded">
+                                    <div class="small text-muted">Success Rate</div>
+                                    <div class="h2 text-success fw-bold">{{getSuccessRate() | number: '1.0-0'}}%</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="stat-box bg-info bg-opacity-10 p-4 rounded">
+                                    <div class="small text-muted">Total Successes</div>
+                                    <div class="h2 text-info fw-bold">{{stats.totalAttempts - stats.totalFailures}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card shadow-lg border-0 mb-4">
+                    <div class="card-header bg-success text-white">
+                        <h4 class="mb-0"><i class="bi bi-list-check"></i> Level-by-Level Breakdown</h4>
+                    </div>
+                    <div class="card-body p-4">
+                        
+                        <div class="level-stat mb-4 pb-4 border-bottom">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="level-badge bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                                    <span class="fw-bold">1</span>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0 fw-bold">🐻 Level 1: Logic Challenge</h6>
+                                    <small class="text-muted">What do you do if you encounter a bear?</small>
+                                </div>
+                            </div>
+                            <div class="row g-3">
+                                <div class="col-6">
+                                    <div class="stat-detail bg-light p-3 rounded">
+                                        <small class="text-muted">Attempts</small>
+                                        <div class="h6 text-primary fw-bold mb-0">{{stats.level0Attempts}}</div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="stat-detail bg-light p-3 rounded">
+                                        <small class="text-muted">Failures</small>
+                                        <div class="h6 text-danger fw-bold mb-0">{{stats.level0Failures}}</div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="stat-detail bg-light p-3 rounded">
+                                        <small class="text-muted">Success Rate</small>
+                                        <div class="h6 text-success fw-bold mb-0">{{getLevel0SuccessRate() | number: '1.0-0'}}%</div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="stat-detail bg-light p-3 rounded">
+                                        <small class="text-muted">Successes</small>
+                                        <div class="h6 text-info fw-bold mb-0">{{stats.level0Attempts - stats.level0Failures}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="level-stat mb-4 pb-4 border-bottom">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="level-badge bg-success text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                                    <span class="fw-bold">2</span>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0 fw-bold">❌⭕ Level 2: Strategy Test</h6>
+                                    <small class="text-muted">Select the winning move for X</small>
+                                </div>
+                            </div>
+                            <div class="row g-3">
+                                <div class="col-6">
+                                    <div class="stat-detail bg-light p-3 rounded">
+                                        <small class="text-muted">Attempts</small>
+                                        <div class="h6 text-primary fw-bold mb-0">{{stats.level1Attempts}}</div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="stat-detail bg-light p-3 rounded">
+                                        <small class="text-muted">Failures</small>
+                                        <div class="h6 text-danger fw-bold mb-0">{{stats.level1Failures}}</div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="stat-detail bg-light p-3 rounded">
+                                        <small class="text-muted">Success Rate</small>
+                                        <div class="h6 text-success fw-bold mb-0">{{getLevel1SuccessRate() | number: '1.0-0'}}%</div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="stat-detail bg-light p-3 rounded">
+                                        <small class="text-muted">Successes</small>
+                                        <div class="h6 text-info fw-bold mb-0">{{stats.level1Attempts - stats.level1Failures}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="level-stat">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="level-badge bg-warning text-dark rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                                    <span class="fw-bold">3</span>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0 fw-bold">🖱️ Level 3: Precision Task</h6>
+                                    <small class="text-muted">Click exactly 5 times</small>
+                                </div>
+                            </div>
+                            <div class="row g-3">
+                                <div class="col-6">
+                                    <div class="stat-detail bg-light p-3 rounded">
+                                        <small class="text-muted">Attempts</small>
+                                        <div class="h6 text-primary fw-bold mb-0">{{stats.level2Attempts}}</div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="stat-detail bg-light p-3 rounded">
+                                        <small class="text-muted">Failures</small>
+                                        <div class="h6 text-danger fw-bold mb-0">{{stats.level2Failures}}</div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="stat-detail bg-light p-3 rounded">
+                                        <small class="text-muted">Success Rate</small>
+                                        <div class="h6 text-success fw-bold mb-0">{{getLevel2SuccessRate() | number: '1.0-0'}}%</div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="stat-detail bg-light p-3 rounded">
+                                        <small class="text-muted">Successes</small>
+                                        <div class="h6 text-info fw-bold mb-0">{{stats.level2Attempts - stats.level2Failures}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <button (click)="restartChalleng()" class="btn btn-primary btn-lg w-100">
+                            <i class="bi bi-arrow-clockwise"></i> Restart Challenge
+                        </button>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="/" class="btn btn-outline-secondary btn-lg w-100">
+                            <i class="bi bi-house"></i> Go Home
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
