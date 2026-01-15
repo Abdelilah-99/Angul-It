@@ -56,12 +56,6 @@ export class CaptchaComponent implements OnInit {
   ];
   selectedCell: { row: number, col: number } | null = null;
   constructor(private router: Router, @Inject(PLATFORM_ID) private platformId: Object, private toasService: ToastService) {
-    // if (isPlatformBrowser(PLATFORM_ID)) {
-    //   const level = localStorage.getItem('level');
-    //   if (level == null) {
-    //     this.selectedChoice = 0;
-    //   }
-    // }
     this.msg = null;
   }
 
